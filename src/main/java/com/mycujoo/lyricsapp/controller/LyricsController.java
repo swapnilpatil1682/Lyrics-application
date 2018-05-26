@@ -4,12 +4,8 @@ import java.io.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.mycujoo.lyricsapp.UrlFromConf;
 import com.mycujoo.lyricsapp.model.Lyrics;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,9 +20,7 @@ import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
 
-import javax.validation.Valid;
 import java.io.InputStream;
-import java.util.Properties;
 
 @Controller
 public class LyricsController {
@@ -40,14 +34,8 @@ public class LyricsController {
     @ResponseBody
     public Map<String, List<String>> sayVerbs() throws IOException {
 
-        String urlFromFile=url;
+        String urlFromFile = url;
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        //            UrlFromConf urlFromConf = mapper.readValue(new ClassPathResource("conf.yaml").getFile(), UrlFromConf.class);
-        //           System.out.println(ReflectionToStringBuilder.toString(urlFromConf,ToStringStyle.MULTI_LINE_STYLE));
-//      urlFromFile = String.valueOf(Integer.parseInt(data.getUrl()));
-        //           urlFromFile = String.valueOf(urlFromConf.getUrl());
-
-        //      System.out.println(" URL given in config file is  :" + urlFromFile);
 
         RestTemplate restTemplate = new RestTemplate();
         Lyrics verbs = restTemplate.getForObject(urlFromFile, Lyrics.class);
@@ -60,7 +48,7 @@ public class LyricsController {
         POSModel model = new POSModel(inputStream);
 
         //Creating an object of WhitespaceTokenizer class
-        WhitespaceTokenizer whitespaceTokenizer= WhitespaceTokenizer.INSTANCE;
+        WhitespaceTokenizer whitespaceTokenizer = WhitespaceTokenizer.INSTANCE;
 
         //Tokenizing the sentence
         String sentence = verbs.getLyrics().toString();
@@ -83,35 +71,37 @@ public class LyricsController {
         TO	to
         JJ	Adjective */
 
-        System.out.println("tags : "+ tags);
+        System.out.println("tags : " + tags);
         //Instantiating the POSSample class
         POSSample sample = new POSSample(tokens, tags);
         System.out.println(sample.toString());
-        Map<String,List<String>> resultMap = new HashMap<String,List<String>>();
-        if(sample != null) {
+        Map<String, List<String>> resultMap = new HashMap<String, List<String>>();
+        if (sample != null) {
             String output = sample.toString();
-            String [] rawWords = output.split(" ");
+            String[] rawWords = output.split(" ");
             List<String> advList = new ArrayList<String>();
             List<String> verbList = new ArrayList<String>();
 
             for (String rawWord : rawWords) {
                 String[] boundWords = rawWord.split("_");
-                if(boundWords[1].equals("VB")) {
-                    System.out.println("tag is NN and Word is : "+boundWords[0]);
+                if (boundWords[1].equals("VB")) {
+                    System.out.println("tag is NN and Word is : " + boundWords[0]);
 
                 }
-                switch(boundWords[1]) {
-                    case "NNP" : advList.add(boundWords[0]);
+                switch (boundWords[1]) {
+                    case "NNP":
+                        advList.add(boundWords[0]);
                         break;
-                    case "VB"  :
-                    case "VBZ" :
-                    case "VBD" : verbList.add(boundWords[0]);
+                    case "VB":
+                    case "VBZ":
+                    case "VBD":
+                        verbList.add(boundWords[0]);
                         break;
                 }
             }
 
 
-            if(verbList.size() > 0) {
+            if (verbList.size() > 0) {
                 resultMap.put("verbs", verbList);
             }
         }
@@ -125,14 +115,14 @@ public class LyricsController {
     @ResponseBody
     public Map<String, List<String>> sayAdjectives() throws IOException {
 
-        String urlFromFile=url;
+        String urlFromFile = url;
 
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         RestTemplate restTemplate = new RestTemplate();
         Lyrics lyrics = restTemplate.getForObject(urlFromFile, Lyrics.class);
         log.info(lyrics.toString());
-        
+
         // OPENNLP code to extract lyrics and adjectives
         //Loading Parts of speech-maxent model
         InputStream inputStream = new FileInputStream("en-pos-maxent.bin");
@@ -189,8 +179,6 @@ public class LyricsController {
         System.out.println(resultMap);
         return resultMap;
     }
-
-
 }
 
 

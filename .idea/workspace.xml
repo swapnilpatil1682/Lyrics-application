@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25030897-3a1e-428f-b3de-6c7dc4727925" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hello/Healthz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycujoo/lyricsapp/Healthz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hello/HelloWorldApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycujoo/lyricsapp/LyricsApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hello/HelloWorldController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycujoo/lyricsapp/controller/LyricsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hello/Lyrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycujoo/lyricsapp/model/Lyrics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hello/UrlFromConf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycujoo/lyricsapp/UrlFromConf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/hello/HelloWorldApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mycujoo/lyricsapp/LyricsApplicationTests.java" afterDir="false" />
-    </list>
+    <list default="true" id="25030897-3a1e-428f-b3de-6c7dc4727925" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,8 +33,8 @@
       <file leaf-file-name="Lyrics.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/mycujoo/lyricsapp/model/Lyrics.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            <state relative-caret-position="60">
+              <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -286,7 +278,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1152" height="720" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -295,13 +286,13 @@
       <window_info id="Image Layers" />
       <window_info anchor="right" id="Capture Analysis" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" visible="true" weight="0.034234233" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.021705426" />
+      <window_info anchor="right" id="Maven Projects" visible="true" weight="0.11261261" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.11162791" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info id="Capture Tool" />
       <window_info id="Designer" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49885583" visible="true" weight="0.27747747" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49885583" visible="true" weight="0.27747747" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.5922481" />
       <window_info anchor="right" id="Gradle" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -398,8 +389,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mycujoo/lyricsapp/model/Lyrics.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="60">
+          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
         </state>
       </provider>
     </entry>

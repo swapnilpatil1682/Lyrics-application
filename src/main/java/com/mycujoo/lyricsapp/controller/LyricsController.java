@@ -24,7 +24,6 @@ import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 @Controller
 public class LyricsController {
@@ -33,14 +32,16 @@ public class LyricsController {
 
     private Properties configProp = new Properties();
 
+/*
     public void loadProps1() {
-        InputStream in = this.getClass().getResourceAsStream("conf.properties");
+        InputStream in = this.getClass().getResourceAsStream("config/conf.yaml");
         try {
             configProp.load(in);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+*/
 
     @GetMapping("/verbs/artist/title")
     @ResponseBody

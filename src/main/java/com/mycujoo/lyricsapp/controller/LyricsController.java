@@ -16,35 +16,42 @@ import org.springframework.web.client.RestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSSample;
 import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 @Controller
 public class LyricsController {
 
     private static final Logger log = LoggerFactory.getLogger(LyricsController.class);
 
+    private Properties configProp = new Properties();
+
+    public void loadProps1() {
+        InputStream in = this.getClass().getResourceAsStream("conf.properties");
+        try {
+            configProp.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @GetMapping("/verbs/artist/title")
     @ResponseBody
     public Map<String, List<String>> sayVerbs() throws IOException {
 
-        String urlFromFile = "";
+        String urlFromFile="";
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         try {
-
             UrlFromConf urlFromConf = mapper.readValue(new ClassPathResource("conf.yaml").getFile(), UrlFromConf.class);
-
-//    UrlFromConf urlFromConf = mapper.readValue(new File("/Users/swapnilpatil/Documents/Swapnil-Personnel/NewsLetter/Original/gs-actuator-service-master/complete/src/main/resources/conf.yaml"), UrlFromConf.class);
-
-            System.out.println(ReflectionToStringBuilder.toString(urlFromConf, ToStringStyle.MULTI_LINE_STYLE));
-//      urlFromFile = String.valueOf(Integer.parseInt(urlFromConf.getUrl()));
+            System.out.println(ReflectionToStringBuilder.toString(urlFromConf,ToStringStyle.MULTI_LINE_STYLE));
+//      urlFromFile = String.valueOf(Integer.parseInt(data.getUrl()));
             urlFromFile = String.valueOf(urlFromConf.getUrl());
 
         } catch (IOException e) {
@@ -52,22 +59,22 @@ public class LyricsController {
             e.printStackTrace();
         }
 
+//      System.out.println(" URL given in config file is  :" + urlFromFile);
+
         RestTemplate restTemplate = new RestTemplate();
-        Lyrics lyrics = restTemplate.getForObject(urlFromFile, Lyrics.class);
-        log.info(lyrics.toString());
+        Lyrics verbs = restTemplate.getForObject(urlFromFile, Lyrics.class);
+        log.info(verbs.toString());
 
-
-        // OPENNLP code to extract lyrics and adjectives
+        // OPENNLP code to extract verbs and adjectives
         //Loading Parts of speech-maxent model
         InputStream inputStream = new FileInputStream("en-pos-maxent.bin");
         POSModel model = new POSModel(inputStream);
 
         //Creating an object of WhitespaceTokenizer class
-        WhitespaceTokenizer whitespaceTokenizer = WhitespaceTokenizer.INSTANCE;
+        WhitespaceTokenizer whitespaceTokenizer= WhitespaceTokenizer.INSTANCE;
 
         //Tokenizing the sentence
-        String sentence = lyrics.getLyrics().toString();
-        System.out.println(" Sentence is " + sentence);
+        String sentence = verbs.getLyrics().toString();
         String[] tokens = whitespaceTokenizer.tokenize(sentence);
 
         //Instantiating POSTaggerME class
@@ -76,26 +83,47 @@ public class LyricsController {
         //Generating tags
         String[] tags = tagger.tag(tokens);
 
-        System.out.println("tags : " + tags);
+        /*
+        NN	Noun, singular or mass
+        DT	Determiner
+        VB	Verb, base form
+        VBD	Verb, past tense
+        VBZ	Verb, third person singular present
+        IN	Preposition or subordinating conjunction
+        NNP	Proper noun, singular
+        TO	to
+        JJ	Adjective */
+
+        System.out.println("tags : "+ tags);
         //Instantiating the POSSample class
         POSSample sample = new POSSample(tokens, tags);
         System.out.println(sample.toString());
-        Map<String, List<String>> resultMap = new HashMap<String, List<String>>();
-        if (sample != null) {
+        Map<String,List<String>> resultMap = new HashMap<String,List<String>>();
+        if(sample != null) {
             String output = sample.toString();
-            String[] rawWords = output.split(" ");
+            String [] rawWords = output.split(" ");
             List<String> advList = new ArrayList<String>();
+            List<String> verbList = new ArrayList<String>();
+
             for (String rawWord : rawWords) {
                 String[] boundWords = rawWord.split("_");
+                if(boundWords[1].equals("VB")) {
+                    System.out.println("tag is NN and Word is : "+boundWords[0]);
 
-                if (boundWords[1].equals("NNP")) {
-                    System.out.println("tag is NN and Word is : " + boundWords[0]);
-                    advList.add(boundWords[0]);
+                }
+                switch(boundWords[1]) {
+                    case "NNP" : advList.add(boundWords[0]);
+                        break;
+                    case "VB"  :
+                    case "VBZ" :
+                    case "VBD" : verbList.add(boundWords[0]);
+                        break;
                 }
             }
 
-            if (advList.size() > 0) {
-                resultMap.put("Verbs", advList);
+
+            if(verbList.size() > 0) {
+                resultMap.put("verbs", verbList);
             }
         }
 

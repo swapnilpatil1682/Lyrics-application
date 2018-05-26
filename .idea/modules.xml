@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gs-actuator-service.iml" filepath="$PROJECT_DIR$/gs-actuator-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LyricsApp.iml" filepath="$PROJECT_DIR$/LyricsApp.iml" />
     </modules>
   </component>
 </project>

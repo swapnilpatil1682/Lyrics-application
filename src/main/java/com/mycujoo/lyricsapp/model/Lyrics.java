@@ -1,4 +1,4 @@
-package hello;
+package com.mycujoo.lyricsapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -11,22 +11,18 @@ public class Lyrics {
     public Lyrics() {
     }
 
-    public String getLyrics()
-    {
+    public String getLyrics() {
         return lyrics;
     }
 
-    public String setLyrics()
-    {
+    public String setLyrics() {
         this.lyrics = lyrics;
         return lyrics;
     }
 
     @Override
     public String toString() {
-        return "Lyrics{" +
-                  lyrics +
-                '}';
+        return "Lyrics{" + lyrics + '}';
     }
 
 }

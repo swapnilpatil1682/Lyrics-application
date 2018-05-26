@@ -1,4 +1,4 @@
-package hello;
+package com.mycujoo.lyricsapp;
 
 public class UrlFromConf {
     private String url;

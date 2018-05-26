@@ -1,9 +1,11 @@
-package hello;
+package com.mycujoo.lyricsapp.controller;
 
 import java.io.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.mycujoo.lyricsapp.UrlFromConf;
+import com.mycujoo.lyricsapp.model.Lyrics;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.core.io.ClassPathResource;
@@ -25,15 +27,15 @@ import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.tokenize.WhitespaceTokenizer;
 
 @Controller
-public class HelloWorldController {
+public class LyricsController {
 
-    private static final Logger log = LoggerFactory.getLogger(HelloWorldController.class);
+    private static final Logger log = LoggerFactory.getLogger(LyricsController.class);
 
     @GetMapping("/verbs/artist/title")
     @ResponseBody
-    public Map<String,List<String>> sayVerbs() throws IOException {
+    public Map<String, List<String>> sayVerbs() throws IOException {
 
-        String urlFromFile="";
+        String urlFromFile = "";
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         try {
 
@@ -41,14 +43,14 @@ public class HelloWorldController {
 
 //    UrlFromConf urlFromConf = mapper.readValue(new File("/Users/swapnilpatil/Documents/Swapnil-Personnel/NewsLetter/Original/gs-actuator-service-master/complete/src/main/resources/conf.yaml"), UrlFromConf.class);
 
-        System.out.println(ReflectionToStringBuilder.toString(urlFromConf,ToStringStyle.MULTI_LINE_STYLE));
+            System.out.println(ReflectionToStringBuilder.toString(urlFromConf, ToStringStyle.MULTI_LINE_STYLE));
 //      urlFromFile = String.valueOf(Integer.parseInt(urlFromConf.getUrl()));
-        urlFromFile = String.valueOf(urlFromConf.getUrl());
+            urlFromFile = String.valueOf(urlFromConf.getUrl());
 
-    } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         RestTemplate restTemplate = new RestTemplate();
         Lyrics lyrics = restTemplate.getForObject(urlFromFile, Lyrics.class);
@@ -61,11 +63,11 @@ public class HelloWorldController {
         POSModel model = new POSModel(inputStream);
 
         //Creating an object of WhitespaceTokenizer class
-        WhitespaceTokenizer whitespaceTokenizer= WhitespaceTokenizer.INSTANCE;
+        WhitespaceTokenizer whitespaceTokenizer = WhitespaceTokenizer.INSTANCE;
 
         //Tokenizing the sentence
         String sentence = lyrics.getLyrics().toString();
-        System.out.println(" Sentence is "+sentence);
+        System.out.println(" Sentence is " + sentence);
         String[] tokens = whitespaceTokenizer.tokenize(sentence);
 
         //Instantiating POSTaggerME class
@@ -74,25 +76,25 @@ public class HelloWorldController {
         //Generating tags
         String[] tags = tagger.tag(tokens);
 
-        System.out.println("tags : "+ tags);
+        System.out.println("tags : " + tags);
         //Instantiating the POSSample class
         POSSample sample = new POSSample(tokens, tags);
         System.out.println(sample.toString());
-        Map<String,List<String>> resultMap = new HashMap<String,List<String>>();
-        if(sample != null) {
+        Map<String, List<String>> resultMap = new HashMap<String, List<String>>();
+        if (sample != null) {
             String output = sample.toString();
-            String [] rawWords = output.split(" ");
+            String[] rawWords = output.split(" ");
             List<String> advList = new ArrayList<String>();
             for (String rawWord : rawWords) {
                 String[] boundWords = rawWord.split("_");
 
-                if(boundWords[1].equals("NNP")) {
-                    System.out.println("tag is NN and Word is : "+boundWords[0]);
+                if (boundWords[1].equals("NNP")) {
+                    System.out.println("tag is NN and Word is : " + boundWords[0]);
                     advList.add(boundWords[0]);
                 }
             }
 
-            if(advList.size() > 0) {
+            if (advList.size() > 0) {
                 resultMap.put("Verbs", advList);
             }
         }
@@ -104,9 +106,9 @@ public class HelloWorldController {
 
     @GetMapping("/adjectives/artist/title")
     @ResponseBody
-    public Map<String,List<String>> sayAdjectives() throws IOException {
+    public Map<String, List<String>> sayAdjectives() throws IOException {
 
-        String urlFromFile="";
+        String urlFromFile = "";
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         try {
 
@@ -114,7 +116,7 @@ public class HelloWorldController {
 
             //    UrlFromConf urlFromConf = mapper.readValue(new File("/Users/swapnilpatil/Documents/Swapnil-Personnel/NewsLetter/Original/gs-actuator-service-master/complete/src/main/resources/conf.yaml"), UrlFromConf.class);
 
-            System.out.println(ReflectionToStringBuilder.toString(urlFromConf,ToStringStyle.MULTI_LINE_STYLE));
+            System.out.println(ReflectionToStringBuilder.toString(urlFromConf, ToStringStyle.MULTI_LINE_STYLE));
 //      urlFromFile = String.valueOf(Integer.parseInt(urlFromConf.getUrl()));
             urlFromFile = String.valueOf(urlFromConf.getUrl());
 
@@ -136,11 +138,11 @@ public class HelloWorldController {
         POSModel model = new POSModel(inputStream);
 
         //Creating an object of WhitespaceTokenizer class
-        WhitespaceTokenizer whitespaceTokenizer= WhitespaceTokenizer.INSTANCE;
+        WhitespaceTokenizer whitespaceTokenizer = WhitespaceTokenizer.INSTANCE;
 
         //Tokenizing the sentence
         String sentence = lyrics.getLyrics().toString();
-        System.out.println(" Sentence is "+sentence);
+        System.out.println(" Sentence is " + sentence);
         String[] tokens = whitespaceTokenizer.tokenize(sentence);
 
         //Instantiating POSTaggerME class
@@ -160,25 +162,25 @@ public class HelloWorldController {
         TO	to
         JJ	Adjective */
 
-        System.out.println("tags : "+ tags);
+        System.out.println("tags : " + tags);
         //Instantiating the POSSample class
         POSSample sample = new POSSample(tokens, tags);
         System.out.println(sample.toString());
-        Map<String,List<String>> resultMap = new HashMap<String,List<String>>();
-        if(sample != null) {
+        Map<String, List<String>> resultMap = new HashMap<String, List<String>>();
+        if (sample != null) {
             String output = sample.toString();
-            String [] rawWords = output.split(" ");
+            String[] rawWords = output.split(" ");
             List<String> advList = new ArrayList<String>();
             for (String rawWord : rawWords) {
                 String[] boundWords = rawWord.split("_");
 
-                if(boundWords[1].equals("JJ")) {
-                    System.out.println("tag is JJ and Word is : "+boundWords[0]);
+                if (boundWords[1].equals("JJ")) {
+                    System.out.println("tag is JJ and Word is : " + boundWords[0]);
                     advList.add(boundWords[0]);
                 }
             }
 
-            if(advList.size() > 0) {
+            if (advList.size() > 0) {
                 resultMap.put("Adjectives", advList);
             }
         }

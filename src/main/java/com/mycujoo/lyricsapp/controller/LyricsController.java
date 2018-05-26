@@ -44,7 +44,7 @@ public class LyricsController {
         // OPENNLP code to extract verbs and adjectives
         //Loading Parts of speech-maxent model
 
-        InputStream inputStream = new FileInputStream("en-pos-maxent.bin");
+        InputStream inputStream = new FileInputStream("/tmp/en-pos-maxent.bin");
         POSModel model = new POSModel(inputStream);
 
         //Creating an object of WhitespaceTokenizer class
@@ -125,7 +125,7 @@ public class LyricsController {
 
         // OPENNLP code to extract lyrics and adjectives
         //Loading Parts of speech-maxent model
-        InputStream inputStream = new FileInputStream("en-pos-maxent.bin");
+        InputStream inputStream = new FileInputStream("/tmp/en-pos-maxent.bin");
         POSModel model = new POSModel(inputStream);
 
         //Creating an object of WhitespaceTokenizer class

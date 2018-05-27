@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: initapp-pod
+  namespace: mycujoo
+  labels:
+    app: mycujooapp
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox
+    command: ['sh', '-c', 'echo The app is running! && sleep 3s']
+  initContainers:
+  - name: init-myservice
+    image: localhost:5000/mycujoo-initcontainer:v1
+    command: ['sh', '-c', '  ']

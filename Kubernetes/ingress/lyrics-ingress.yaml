@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: lyricsapp-ingress
+  namespace: mycujoo
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /verbs/artist/title
+        backend:
+          serviceName: lyricsapp
+          servicePort: 9100
+      - path: /adjectives/artist/title
+        backend:
+          serviceName: lyricsapp
+          servicePort: 9100
+      - path: /healthz
+        backend:
+          serviceName: lyricsapp
+          servicePort: 9100

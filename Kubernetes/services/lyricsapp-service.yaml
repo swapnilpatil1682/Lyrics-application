@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lyricsapp
+  namespace: mycujoo
+  labels:
+    app: lyricsapp
+spec:
+  ports:
+  - name: lyrics-port
+    port: 9100
+    targetPort: 9100
+  selector:
+    app: lyricsapp

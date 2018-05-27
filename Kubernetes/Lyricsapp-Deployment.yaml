@@ -1,5 +1,5 @@
-apiVersion: v1
-kind: Pod
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   name: init-lyricsapp
   namespace: mycujoo
@@ -22,3 +22,22 @@ spec:
   - name: myapp-container
     image: busybox
     command: ['sh', '-c', 'echo The Lyrics API is up and running! && sleep 3600']
+ 
+metadata:
+  name: lyricsapp
+  namespace: mycujoo  
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lyricsapp
+    spec:
+      containers:
+      - name: lyricsapp
+        image: pswapnil1/lyricsapp:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: lyrics-port
+          containerPort: 9100
+          protocol: TCP

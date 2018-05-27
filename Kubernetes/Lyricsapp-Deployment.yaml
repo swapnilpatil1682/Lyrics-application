@@ -41,3 +41,10 @@ spec:
         - name: lyrics-port
           containerPort: 9100
           protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /healthy
+            port: sotac-liveness
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+

@@ -43,8 +43,8 @@ spec:
           protocol: TCP
         livenessProbe:
           httpGet:
-            path: /healthy
-            port: sotac-liveness
+            path: /healthz
+            port: 9100
           initialDelaySeconds: 30
           timeoutSeconds: 5
 

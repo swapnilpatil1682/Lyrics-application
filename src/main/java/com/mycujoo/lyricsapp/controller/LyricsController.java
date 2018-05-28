@@ -8,6 +8,7 @@ import com.mycujoo.lyricsapp.model.Lyrics;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.slf4j.Logger;
@@ -30,11 +31,14 @@ public class LyricsController {
     @Value("${url}")
     String url;
 
-    @GetMapping("/verbs/artist/title")
+    @GetMapping("/verbs/{artist}/{title}")
     @ResponseBody
-    public Map<String, List<String>> sayVerbs() throws IOException {
+    public Map<String, List<String>> sayVerbs(@PathVariable("artist")String artist,
+                                              @PathVariable("title")String title) throws IOException {
 
-        String urlFromFile = url;
+        log.info(url);
+        String urlFromFile = url.replace("{artist}",artist).replace("{title}",title);
+        log.info(urlFromFile);
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         RestTemplate restTemplate = new RestTemplate();
@@ -70,11 +74,8 @@ public class LyricsController {
         NNP	Proper noun, singular
         TO	to
         JJ	Adjective */
-
-        System.out.println("tags : " + tags);
         //Instantiating the POSSample class
         POSSample sample = new POSSample(tokens, tags);
-        System.out.println(sample.toString());
         Map<String, List<String>> resultMap = new HashMap<String, List<String>>();
         if (sample != null) {
             String output = sample.toString();
@@ -111,12 +112,13 @@ public class LyricsController {
     }
 
 
-    @GetMapping("/adjectives/artist/title")
+    @GetMapping("/adjectives/{artist}/{title}")
     @ResponseBody
-    public Map<String, List<String>> sayAdjectives() throws IOException {
+    public Map<String, List<String>> sayAdjectives(@PathVariable("artist")String artist,
+                                                   @PathVariable("title")String title) throws IOException {
 
-        String urlFromFile = url;
-
+        String urlFromFile = url.replace("{artist}",artist).replace("{title}",title);
+        log.info(urlFromFile);
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         RestTemplate restTemplate = new RestTemplate();

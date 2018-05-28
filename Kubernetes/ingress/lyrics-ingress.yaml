@@ -10,15 +10,7 @@ spec:
   - host: localhost
     http:
       paths:
-      - path: /verbs/artist/title
-        backend:
-          serviceName: lyricsapp
-          servicePort: 9100
-      - path: /adjectives/artist/title
-        backend:
-          serviceName: lyricsapp
-          servicePort: 9100
-      - path: /healthz
+      - path: /
         backend:
           serviceName: lyricsapp
           servicePort: 9100

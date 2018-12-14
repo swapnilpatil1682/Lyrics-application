@@ -1,4 +1,4 @@
-# MyCujoo-Task
+# Lyrics Application
 
 To run spring app on terminal :
 ./mvnw spring-boot:run
